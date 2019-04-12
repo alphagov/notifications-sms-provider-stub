@@ -29,16 +29,16 @@ type MmgCallback struct {
 	MSISDN string
 }
 
-var MMG_MIN_DELAY int
-var MMG_MAX_DELAY int
+var MMG_MIN_DELAY_MS int
+var MMG_MAX_DELAY_MS int
 var MMG_CALLBACK_URL string
 
 func init() {
-	MMG_MIN_DELAY, _ = strconv.Atoi(getenv("MMG_MIN_DELAY", "100"))
-	MMG_MAX_DELAY, _ = strconv.Atoi(getenv("MMG_MAX_DELAY", "1000"))
+	MMG_MIN_DELAY_MS, _ = strconv.Atoi(getenv("MMG_MIN_DELAY_MS", "100"))
+	MMG_MAX_DELAY_MS, _ = strconv.Atoi(getenv("MMG_MAX_DELAY_MS", "1000"))
 	MMG_CALLBACK_URL = getenv("MMG_CALLBACK_URL", "http://localhost:6011/notifications/sms/mmg")
 
-	log.Printf("MMG callback: URL %s, with delay %d-%d ms\n", MMG_CALLBACK_URL, MMG_MIN_DELAY, MMG_MAX_DELAY)
+	log.Printf("MMG callback: URL %s, with delay %d-%d ms\n", MMG_CALLBACK_URL, MMG_MIN_DELAY_MS, MMG_MAX_DELAY_MS)
 }
 
 func MmgEndpoint(w http.ResponseWriter, r *http.Request) {
@@ -48,7 +48,7 @@ func MmgEndpoint(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	log.Printf("MMG received message %s:  %s  \n", reqData.Cid, reqData.Msg)
+	log.Printf("MMG received message %s:\n\n    %s\n\n", reqData.Cid, reqData.Msg)
 
 	json.NewEncoder(w).Encode(MmgResponse{Reference: rand.Intn(100000)})
 	go MmgSendCallback(reqData.Cid, reqData.MSISDN)
@@ -56,7 +56,7 @@ func MmgEndpoint(w http.ResponseWriter, r *http.Request) {
 
 func MmgSendCallback(cid string, msisdn string) {
 
-	time.Sleep(time.Duration(MMG_MIN_DELAY+rand.Intn(MMG_MAX_DELAY-MMG_MIN_DELAY)) * time.Millisecond)
+	time.Sleep(time.Duration(MMG_MIN_DELAY_MS+rand.Intn(MMG_MAX_DELAY_MS-MMG_MIN_DELAY_MS)) * time.Millisecond)
 
 	data := MmgCallback{Cid: cid, Status: "3", MSISDN: msisdn}
 	buf := new(bytes.Buffer)
