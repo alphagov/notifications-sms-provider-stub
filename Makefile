@@ -11,13 +11,13 @@ run: build
 .PHONY: preview
 preview:
 	$(eval export CF_SPACE=preview)
-	$(eval export API_HOSTNAME=notify.works)
+	$(eval export API_HOSTNAME=api.notify.works)
 	cf target -s ${CF_SPACE}
 
 .PHONY: staging
 staging:
 	$(eval export CF_SPACE=staging)
-	$(eval export API_HOSTNAME=staging-notify.works)
+	$(eval export API_HOSTNAME=api.staging-notify.works)
 	cf target -s ${CF_SPACE}
 
 .PHONY: generate-manifest
