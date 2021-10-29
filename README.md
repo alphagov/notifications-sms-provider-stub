@@ -52,8 +52,6 @@ To turn it on for an app running in the PaaS use:
 ```
 cf set-env APP-NAME FIRETEXT_URL https://notify-sms-provider-stub-staging.cloudapps.digital/firetext
 cf restage APP-NAME
-
 ```
-and equivalent for the `MMG_URL`. The environment variables will remain set even if you redeploy the app.
 
-It is suggested to turn it on for minimum the `notify-api`, `notify-delivery-worker-sender` and `notify-delivery-worker-retry-tasks`. By not turning it on for `notify-delivery-worker-internal`, which is responsible for delivering MFA codes, it will mean you can still log into the environment.
+and equivalent for the `MMG_URL`. The environment variables will remain set even if you redeploy the app.
