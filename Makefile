@@ -1,4 +1,5 @@
 SHELL := /bin/bash
+CF_MANIFEST_PATH ?= /tmp/manifest.yml
 
 .PHONY: build
 build:
@@ -28,4 +29,5 @@ generate-manifest:
 .PHONY: cf-push
 cf-push:
 	$(if ${CF_SPACE},,$(error Must specify CF_SPACE))
-	cf push -f <(make -s generate-manifest)
+	make -s generate-manifest > ${CF_MANIFEST_PATH}
+	cf push -f ${CF_MANIFEST_PATH}
