@@ -10,6 +10,7 @@ applications:
 
   routes:
     - route: notify-sms-provider-stub-{{CF_SPACE}}.cloudapps.digital
+    - route: notify-sms-provider-stub-{{CF_SPACE}}.apps.internal
 
   env:
     GOVERSION: go1.16

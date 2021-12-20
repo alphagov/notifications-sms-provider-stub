@@ -50,7 +50,7 @@ export FIRETEXT_URL='http://localhost:6300/firetext'
 To turn it on for an app running in the PaaS use:
 
 ```
-cf set-env APP-NAME FIRETEXT_URL https://notify-sms-provider-stub-staging.cloudapps.digital/firetext
+cf set-env APP-NAME FIRETEXT_URL http://notify-sms-provider-stub-staging.apps.internal:8080/firetext
 cf restage APP-NAME
 ```
 
