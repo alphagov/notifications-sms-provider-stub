@@ -2,7 +2,7 @@
 applications:
 - name: notify-sms-provider-stub
 
-  memory: 256M
+  memory: 512M
   instances: 1
 
   buildpacks:
