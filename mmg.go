@@ -32,11 +32,20 @@ type MmgCallback struct {
 var MMG_MIN_DELAY_MS int
 var MMG_MAX_DELAY_MS int
 var MMG_CALLBACK_URL string
+var mmgClient *http.Client
 
 func init() {
 	MMG_MIN_DELAY_MS, _ = strconv.Atoi(getenv("MMG_MIN_DELAY_MS", "100"))
 	MMG_MAX_DELAY_MS, _ = strconv.Atoi(getenv("MMG_MAX_DELAY_MS", "1000"))
 	MMG_CALLBACK_URL = getenv("MMG_CALLBACK_URL", "http://localhost:6011/notifications/sms/mmg")
+	var maxConns, _ = strconv.Atoi(getenv("MMG_MAX_CONNS", "256"))
+
+	mmgClient = &http.Client{
+		Timeout: time.Second * 10,
+		Transport: &http.Transport{
+			MaxConnsPerHost: maxConns,
+		},
+	}
 
 	log.Printf("MMG callback: URL %s, with delay %d-%d ms\n", MMG_CALLBACK_URL, MMG_MIN_DELAY_MS, MMG_MAX_DELAY_MS)
 }
@@ -62,11 +71,12 @@ func MmgSendCallback(cid string, msisdn string) {
 	buf := new(bytes.Buffer)
 	json.NewEncoder(buf).Encode(data)
 
-	res, err := http.Post(MMG_CALLBACK_URL, "application/json; charset=utf-8", buf)
+	res, err := mmgClient.Post(MMG_CALLBACK_URL, "application/json; charset=utf-8", buf)
 	if err != nil {
 		log.Printf("MMG callback failed: %s\n", err.Error())
 		return
 	}
+	res.Body.Close()
 
 	log.Printf("MMG callback sent for %s: %s", cid, res.Status)
 }
