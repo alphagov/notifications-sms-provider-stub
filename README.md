@@ -20,9 +20,7 @@ export MMG_MIN_DELAY_MS=100  # min delay before callback is sent in ms
 export MMG_MAX_DELAY_MS=1000 # max delay before callback is sent in ms
 export MMG_CALLBACK_URL='http://localhost:6011/notifications/sms/mmg'
 
-export FIRETEXT_MIN_DELAY_MS=100
-export FIRETEXT_MAX_DELAY_MS=1000
-export FIRETEXT_CALLBACK_URL='http://localhost:6011/notifications/sms/firetext'
+# similarly for each other provider
 "> environment.sh
 ```
 
@@ -37,10 +35,9 @@ make run
 This will start a server on port 6300, configured to send the callbacks to a local Notify API. To configure Notify API to use the server instead of actual MMG and Firetext set the `environment.sh` variables in the Notify API:
 
 ```shell
-
 export MMG_URL='http://localhost:6300/mmg'
-export FIRETEXT_URL='http://localhost:6300/firetext'
 
+# similarly for each other provider
 ```
 
 ## To deploy the application
@@ -54,4 +51,4 @@ cf set-env APP-NAME FIRETEXT_URL http://notify-sms-provider-stub-staging.apps.in
 cf restage APP-NAME
 ```
 
-and equivalent for the `MMG_URL`. The environment variables will remain set even if you redeploy the app.
+and equivalent for other providers. The environment variables will remain set even if you redeploy the app.
