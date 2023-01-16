@@ -13,6 +13,6 @@ applications:
     - route: notify-sms-provider-stub-{{CF_SPACE}}.apps.internal
 
   env:
-    GOVERSION: go1.16
+    GOVERSION: go1.19
     MMG_CALLBACK_URL: https://{{API_HOSTNAME}}/notifications/sms/mmg
     FIRETEXT_CALLBACK_URL: https://{{API_HOSTNAME}}/notifications/sms/firetext
