@@ -48,6 +48,7 @@ To turn it on for an app running in the PaaS use:
 
 ```
 cf set-env APP-NAME FIRETEXT_URL http://notify-sms-provider-stub-staging.apps.internal:8080/firetext
+cf set-env APP-NAME MMG_URL http://notify-sms-provider-stub-staging.apps.internal:8080/mmg
 cf restage APP-NAME
 ```
 
