@@ -14,5 +14,5 @@ applications:
 
   env:
     GOVERSION: go1.19
-    MMG_CALLBACK_URL: https://{{API_HOSTNAME}}/notifications/sms/mmg
-    FIRETEXT_CALLBACK_URL: https://{{API_HOSTNAME}}/notifications/sms/firetext
+    MMG_CALLBACK_URL: {{API_PROTOCOL}}://{{API_HOSTNAME}}/notifications/sms/mmg
+    FIRETEXT_CALLBACK_URL: {{API_PROTOCOL}}://{{API_HOSTNAME}}/notifications/sms/firetext

@@ -1,5 +1,6 @@
 SHELL := /bin/bash
 CF_MANIFEST_PATH ?= /tmp/manifest.yml
+API_PROTOCOL ?= https
 
 .PHONY: build
 build:
@@ -18,13 +19,14 @@ preview:
 .PHONY: staging
 staging:
 	$(eval export CF_SPACE=staging)
-	$(eval export API_HOSTNAME=api.staging-notify.works)
+	$(eval export API_HOSTNAME=notify-api-staging.apps.internal:8080)
+	$(eval export API_PROTOCOL=http)
 	cf target -s ${CF_SPACE}
 
 .PHONY: generate-manifest
 generate-manifest:
 	$(if ${CF_SPACE},,$(error Must specify CF_SPACE))
-	@sed -e "s/{{CF_SPACE}}/${CF_SPACE}/; s/{{API_HOSTNAME}}/${API_HOSTNAME}/" manifest.yml.tpl
+	@sed -e "s/{{CF_SPACE}}/${CF_SPACE}/; s/{{API_HOSTNAME}}/${API_HOSTNAME}/; s/{{API_PROTOCOL}}/${API_PROTOCOL}/" manifest.yml.tpl
 
 .PHONY: cf-push
 cf-push:
