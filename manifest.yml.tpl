@@ -8,6 +8,8 @@ applications:
   buildpacks:
     - go_buildpack
 
+  stack: cflinuxfs4
+
   routes:
     - route: notify-sms-provider-stub-{{CF_SPACE}}.cloudapps.digital
     - route: notify-sms-provider-stub-{{CF_SPACE}}.apps.internal
