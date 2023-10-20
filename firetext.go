@@ -6,7 +6,9 @@ import (
 	"math/rand"
 	"net/http"
 	"net/url"
+	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -58,11 +60,24 @@ func FiretextSendCallback(reference string, to string) {
 
 	time.Sleep(time.Duration(FIRETEXT_MIN_DELAY_MS+rand.Intn(FIRETEXT_MAX_DELAY_MS-FIRETEXT_MIN_DELAY_MS)) * time.Millisecond)
 
-	res, err := firetextClient.PostForm(FIRETEXT_CALLBACK_URL, url.Values{
+	data := url.Values{
 		"status":    {"0"},
 		"reference": {reference},
 		"mobile":    {to},
-	})
+	}
+	formDataReader := strings.NewReader(data.Encode())
+
+	req, err := http.NewRequest("POST", FIRETEXT_CALLBACK_URL, formDataReader)
+
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	ecs_header := os.Getenv("USE_ECS_APPS")
+	if ecs_header == "true" {
+		req.Header.Set("x-notify-ecs-origin", "true")
+	}
+
+	res, err := firetextClient.Do(req)
+
 	if err != nil {
 		log.Printf("Firetext callback failed: %s\n", err.Error())
 		return

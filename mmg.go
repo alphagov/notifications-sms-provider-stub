@@ -6,6 +6,7 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
@@ -71,7 +72,17 @@ func MmgSendCallback(cid string, msisdn string) {
 	buf := new(bytes.Buffer)
 	json.NewEncoder(buf).Encode(data)
 
-	res, err := mmgClient.Post(MMG_CALLBACK_URL, "application/json; charset=utf-8", buf)
+	req, err := http.NewRequest("POST", MMG_CALLBACK_URL, buf)
+
+	req.Header.Set("Content-Type", "application/json; charset=utf-8")
+
+	ecs_header := os.Getenv("USE_ECS_APPS")
+	if ecs_header == "true" {
+		req.Header.Set("x-notify-ecs-origin", "true")
+	}
+
+	res, err := mmgClient.Do(req)
+
 	if err != nil {
 		log.Printf("MMG callback failed: %s\n", err.Error())
 		return

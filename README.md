@@ -24,6 +24,11 @@ export MMG_CALLBACK_URL='http://localhost:6011/notifications/sms/mmg'
 "> environment.sh
 ```
 
+To target the ECS apps by setting the ECS header, you can give the `USE_ECS_APPS` environment variable a value of "true":
+```shell
+export USE_ECS_APPS="true"
+```
+
 ## To run the application
 
 To build and run the server locally:
