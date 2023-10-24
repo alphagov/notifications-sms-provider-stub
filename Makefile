@@ -1,6 +1,11 @@
 SHELL := /bin/bash
 CF_MANIFEST_PATH ?= /tmp/manifest.yml
 
+
+.PHONY: build-with-docker
+build-with-docker:
+	docker build -f docker/Dockerfile -t sms-provider-stub .
+
 .PHONY: build
 build:
 	go build -o bin/sms-provider-stub
