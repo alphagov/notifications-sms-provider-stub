@@ -4,7 +4,10 @@ WORKDIR /src
 
 COPY go.mod .
 COPY *.go .
-RUN go build -o /bin/sms-provider-stub
+
+# CGO *must* be disabled to avoid dynamic linking
+ARG CGO_ENABLED=0
+RUN go build -o /bin/sms-provider-stub .
 
 FROM scratch
 COPY --from=builder /bin/sms-provider-stub /bin/sms-provider-stub
