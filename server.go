@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
+	http.HandleFunc("/", HealthcheckEndpoint)
 	http.HandleFunc("/mmg", MmgEndpoint)
 	http.HandleFunc("/firetext", FiretextEndpoint)
 	port := getenv("PORT", "6300")
