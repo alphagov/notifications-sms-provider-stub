@@ -24,11 +24,6 @@ export MMG_CALLBACK_URL='http://localhost:6011/notifications/sms/mmg'
 "> environment.sh
 ```
 
-To target the ECS apps by setting the ECS header, you can give the `USE_ECS_APPS` environment variable a value of "true":
-```shell
-export USE_ECS_APPS="true"
-```
-
 ## To run the application
 
 To build and run the server locally:
@@ -45,16 +40,10 @@ export MMG_URL='http://localhost:6300/mmg'
 # similarly for each other provider
 ```
 
-## To deploy the application
+## How to make the API use this email provider stub
 
-### How to make the API use this email provider stub
+To turn it on for an app running ensure you set the following environment variables:
 
-To turn it on for an app running in the PaaS use:
+FIRETEXT_URL=http://notify-sms-provider-stub-staging.apps.internal:8080/firetext
+MMG_URL=http://notify-sms-provider-stub-staging.apps.internal:8080/mmg
 
-```
-cf set-env APP-NAME FIRETEXT_URL http://notify-sms-provider-stub-staging.apps.internal:8080/firetext
-cf set-env APP-NAME MMG_URL http://notify-sms-provider-stub-staging.apps.internal:8080/mmg
-cf restage APP-NAME
-```
-
-and equivalent for other providers. The environment variables will remain set even if you redeploy the app.
