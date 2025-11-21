@@ -47,3 +47,7 @@ To turn it on for an app running ensure you set the following environment variab
 FIRETEXT_URL=http://notify-sms-provider-stub-staging.apps.internal:8080/firetext
 MMG_URL=http://notify-sms-provider-stub-staging.apps.internal:8080/mmg
 
+
+## Licence
+
+Unless stated otherwise, the codebase is released under [the MIT License](LICENSE). This covers both the codebase and any sample code in the documentation.
